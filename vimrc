@@ -148,3 +148,7 @@ nnoremap <C-K> :cN<CR>
 inoremap <expr> ,df strftime('%Y-%m-%d %H:%M:%S')
 inoremap <expr> ,dd strftime('%Y-%m-%d')
 inoremap <expr> ,dt strftime('%H:%M:%S')
+"Vimfilerを標準のファイルエクスプローラーにする
+let g:vimfiler_as_default_explorer = 1
+"New feature 7.3
+set undofile
