@@ -151,4 +151,18 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 "Vimfilerを標準のファイルエクスプローラーにする
 let g:vimfiler_as_default_explorer = 1
 "New feature 7.3
-set undofile
+if v:version >= 703
+	set undofile
+endif
+"Excel like auto fill command
+function! Autofill()
+	let l:befor = input('Befor str? ')
+	let l:after = input('After str? ')
+	let l:start = input('Start num? ')
+	let l:end   = input('End   num? ')
+	for i in reverse(range(l:start, l:end))
+		call append(line('.'), printf("%s%d%s",l:befor,i,l:after))
+	endfor
+endfunction
+command! -nargs=0 Autofill
+\	echo Autofill()
