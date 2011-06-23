@@ -1,5 +1,5 @@
 "構文ハイライト
-syntax on
+syntax enable
 "Vi互換をオフ
 set nocompatible
 "行番号の表示
@@ -24,19 +24,14 @@ set showcmd
 set incsearch
 "検索時に大文字を含んでいたら大文字小文字を区別しない
 set nosmartcase
-"特定拡張子の新規ファイルを作成したときのテンプレート
-"autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
-"autocmd BufNewFile *.ps 0r $HOME/.vim/template/postscript.txt
 "入力補完の設定
 setlocal omnifunc=syntaxcomplete#Complete
 "新規lispファイルを作成したときの設定
 let lisp_rainbow = 1
 autocmd FileType lisp set nocindent | set lisp | let lisp_rainbow = 1 
 autocmd FileType scheme set nocindent | set lisp | let lisp_rainbow = 1
-
 set encoding=utf-8
-set fileencodings=iso-2022-jp,sjis,utf-8
-" 改行コードの自動認識
+"改行コードを自動認識
 set fileformats=unix,dos,mac
 "□とか○の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
@@ -62,28 +57,42 @@ let g:use_xhtml = 1
 let g:html_use_css = 1
 let g:html_no_pre = 1
 
-"バッファを自動的に保存"
-autocmd InsertLeave *  silent! wall
-set autowrite
-autocmd CursorHold *  silent! wall
-autocmd CursorHoldI *  silent! wall
-
-nnoremap <C-w>h <C-w>h:call <SID>good_width()<Cr>
-nnoremap <C-w>l <C-w>l:call <SID>good_width()<Cr>
-nnoremap <C-w>H <C-w>H:call <SID>good_width()<Cr>
-nnoremap <C-w>L <C-w>L:call <SID>good_width()<Cr>
+nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
+nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
+nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
+nnoremap <C-w>L <C-w>L:call <SID>good_width()<CR>
 function! s:good_width()
-  if winwidth(0) < 84
-    vertical resize 84
+  if winwidth(0) < 120
+    vertical resize 120
   endif
 endfunction
 
 "Ctrl-eで行末Ctrl-aで行頭
 imap <C-e> <END> 
 imap <C-a> <HOME>
+"NeoComplCacheを使う
 
 "vimrcをリロード"
 command! ReloadVimrc  source $MYVIMRC 
+
+" lhs comments
+vmap ,# :s/^/#/<CR>:nohlsearch<CR>
+vmap ,/ :s/^/¥/¥//<CR>:nohlsearch<CR>
+vmap ,> :s/^/> /<CR>:nohlsearch<CR>
+vmap ," :s/^/¥"/<CR>:nohlsearch<CR>
+vmap ,% :s/^/%/<CR>:nohlsearch<CR>
+vmap ,! :s/^/!/<CR>:nohlsearch<CR>
+vmap ,; :s/^/;/<CR>:nohlsearch<CR>
+vmap ,- :s/^/--/<CR>:nohlsearch<CR>
+vmap ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR>:nohlsearch<CR>
+" wrapping comments
+vmap ,* :s/^\(.*\)$/\/\* \1 \*\//<CR>:nohlsearch<CR>
+vmap ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR>:nohlsearch<CR>
+vmap ,< :s/^\(.*\)$//<CR>:nohlsearch<CR>
+vmap ,d :s/^\([/(]\*\\|\)$/\2/<CR>:nohlsearch <CR>
+" block comments
+vmap ,b v`k0i/*`>j0i*/<CR>
+vmap ,h v`k0i<CR>
 
 "クリップボードの同期
 set clipboard+=autoselect
@@ -105,7 +114,6 @@ endif
 filetype plugin indent on
 "neocomplcacheを使う
 let g:neocomplcache_enable_at_startup = 1
-
 "Vimの戦闘力を計算する
 function! Scouter(file, ...)
 	let pat = '^\s*$\|^\s*"'
@@ -130,39 +138,49 @@ set backspace=indent,eol,start
 "ステータスラインを表示
 set laststatus=2 " ステータスラインを表示  
 set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
-" perl folding
-" maker
-set foldmethod=marker
-"clojure
-let g:clj_paren_rainbow = 1
-let g:clj_highlight_builtins = 1
-"Color Theme
-colorscheme wombat
-"title
-set title
-set titlestring=Vim:\ %f\ %h%r%m
-"QuickFix keybind
-nnoremap <C-J> :cn<CR>
-nnoremap <C-K> :cN<CR>
-"日時の入力を簡単にする
-inoremap <expr> ,df strftime('%Y-%m-%d %H:%M:%S')
-inoremap <expr> ,dd strftime('%Y-%m-%d')
-inoremap <expr> ,dt strftime('%H:%M:%S')
-"Vimfilerを標準のファイルエクスプローラーにする
+
+set clipboard=autoselect
+
+
+let mapleader = ','
+let maplocalleader = '.'
+
+nnoremap \ .
+"vimfiler
 let g:vimfiler_as_default_explorer = 1
-"New feature 7.3
-if v:version >= 703
-	set undofile
-endif
-"Excel like auto fill command
+"AutoFill Function
 function! Autofill()
-	let l:befor = input('Befor str? ')
-	let l:after = input('After str? ')
-	let l:start = input('Start num? ')
-	let l:end   = input('End   num? ')
+	let l:befor = input('Befor Str? ')
+	let l:after = input('After Str? ')
+	let l:start = input('Start Num? ')
+	let l:end   = input('End   Num? ')
 	for i in reverse(range(l:start, l:end))
-		call append(line('.'), printf("%s%d%s",l:befor,i,l:after))
+		call append(line('.'), printf("%s%d%s", l:befor, i, l:after))
 	endfor
 endfunction
 command! -nargs=0 Autofill
 \	echo Autofill()
+"Quick fix Keymapping
+nnoremap Q q
+
+nnoremap qj  :cnext<CR>
+nnoremap qk  :cprevious<CR>
+nnoremap qr  :crewind<CR>
+nnoremap qK  :cfirst<CR>
+nnoremap qJ  :clast<CR>
+nnoremap qf  :cnfile<CR>
+nnoremap qF  :cpfile<CR>
+nnoremap ql  :clist<CR>
+nnoremap qq  :cc<CR>
+nnoremap qo  :copen<CR>
+nnoremap qc  :cclose<CR>
+nnoremap qw  :cwindow<CR>
+nnoremap qp  :colder<CR>
+nnoremap qn  :cnewer<CR>
+nnoremap qm  :make<CR>
+nnoremap qM  :make<Space>
+nnoremap qg  :grep<Space>
+nnoremap q   <Nop>
+
+"Pathogen & pathocket
+call pathogen#runtime_append_all_bundles()
