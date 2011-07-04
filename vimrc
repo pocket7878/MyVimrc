@@ -227,15 +227,6 @@ let g:eskk#large_dictionary = {
 	\	'sorted': 1,
 	\	'encoding': 'euc-jp',
 \}
-let g:eskk#statusline_mode_strings = {
-	\	'hira': 'あ',
-	\	'kata': 'ア',
-	\	'ascii': 'aA',
-	\	'zenei': 'ａ',
-	\	'hankata': 'ｧｱ',
-	\	'abbrev': 'aあ'
-\}
-
 nnoremap <C-j> <Plug>(eskk:toggle)
 "}}}
 
