@@ -7,12 +7,11 @@
 """  * 折り畳みの章のタイトルには "" を利用する
 """
 
-"Start Loading
+""Start Loading
 if !exists('s:loaded_my_vimrc')
 	" to use many extensions of Vim.
 	set nocompatible
 endif
-
 ""Basic settings"{{{
 "構文ハイライト
 syntax enable
@@ -47,7 +46,7 @@ set formatoptions=tcqlM1
 "ステータスラインを表示
 set laststatus=2 
 "ステータスラインの内容を定義
-set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
 "削除方法の設定
 set backspace=indent,eol,start
 "端末でもマウスを使う
@@ -102,9 +101,9 @@ set fileformats=unix,dos,mac
 ""コメントインアウトするキーバインド"{{{
 " lhs comments
 vmap <Leader># :s/^/#/<CR>:nohlsearch<CR>
-vmap <Leader>/ :s/^/¥/¥//<CR>:nohlsearch<CR>
+vmap <Leader>/ :s/^/\/\//<CR>:nohlsearch<CR>
 vmap <Leader>> :s/^/> /<CR>:nohlsearch<CR>
-vmap <Leader>" :s/^/¥"/<CR>:nohlsearch<CR>
+vmap <Leader>" :s/^/\"/<CR>:nohlsearch<CR>
 vmap <Leader>% :s/^/%/<CR>:nohlsearch<CR>
 vmap <Leader>! :s/^/!/<CR>:nohlsearch<CR>
 vmap <Leader>; :s/^/;/<CR>:nohlsearch<CR>
@@ -135,6 +134,9 @@ command! -bar -bang -nargs=? -complete=file Scouter
 
 ""GUIで動作しているときのための設定"{{{
 if has('gui_running')
+	set guioptions+=m
+	set lines=40 
+	set columns=120
 	set mousemodel=popup
 	set mouse=a
 	set nomousefocus
@@ -199,10 +201,11 @@ imap <C-a> <HOME>
 "}}}
 
 ""クリップボードの同期の設定"{{{
+set clipboard+=autoselect
 set clipboard+=unnamed
-if has('unnamedplus')
-	set clipboard+=unnamedplus
-endif
+"if has('unnamedplus')
+"	set clipboard+=unnamedplus
+"endif
 "}}}
 
 ""便利なコマンドやキーバインド"{{{
@@ -227,6 +230,8 @@ let g:eskk#large_dictionary = {
 	\	'sorted': 1,
 	\	'encoding': 'euc-jp',
 \}
+autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
 nnoremap <C-j> <Plug>(eskk:toggle)
 "}}}
 
