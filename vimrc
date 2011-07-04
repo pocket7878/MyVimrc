@@ -11,9 +11,7 @@ set autoindent
 "高度なインデントの設定
 set smartindent
 "C言語の高度なインデントをする
-set cindent
-"行頭の余白内でTabを打ち込むと,'shiftwidth'との数だけインデントする
-set smarttab
+set cindent "行頭の余白内でTabを打ち込むと,'shiftwidth'との数だけインデントするset smarttab
 "ファイル保存時にバックアップファイルを作成
 set nobackup
 "カーソルのある行番号の表示
@@ -137,7 +135,7 @@ set formatoptions=tcroqlM1
 set backspace=indent,eol,start
 "ステータスラインを表示
 set laststatus=2 " ステータスラインを表示  
-set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
 
 set clipboard=autoselect
 
@@ -184,3 +182,42 @@ nnoremap q   <Nop>
 
 "Pathogen & pathocket
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+"Turn off paredit mode
+let g:paredit_mode = 0
+
+"Emacs like spliting key-bind
+nnoremap <C-x>1 :only<CR>
+nnoremap <C-x>2 :split<CR>
+nnoremap <C-x>3 :vsplit<CR>
+nnoremap <C-x>0 :close<CR>
+"TwitVim
+"let twitvim_login = "Hannibal7878:masa007"
+"let twitvim_count = 100
+"Easy souce
+nnoremap <silent> <Leader>s : source %<CR>
+"outputz.vim
+let g:outputz_secret_key = "Hei5YWEuna3d"
+"新規HTMLファイルを作成したときに自動でテンプレートを挿入する
+autocmd BufNewFile *.html 0r ~/Documents/vim-template/html.template
+"Im disable to use essk.vim
+set imdisable
+"Vimfiler
+let g:vimfiler_as_default_explorer = 1
+"eskk.vim
+let g:eskk#large_dictionary = {
+	\	'path': "/usr/share/skk/SKK-JISYO",
+	\	'sorted': 1,
+	\	'encoding': 'euc-jp',
+\}
+let g:eskk#statusline_mode_strings = {
+	\	'hira': 'あ',
+	\	'kata': 'ア',
+	\	'ascii': 'aA',
+	\	'zenei': 'ａ',
+	\	'hankata': 'ｧｱ',
+	\	'abbrev': 'aあ'
+\}
+nnoremap <C-j> <Plug>(eskk:toggle)
+"Fold
+set fdm=marker
