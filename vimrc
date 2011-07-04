@@ -191,9 +191,6 @@ nnoremap <C-x>1 :only<CR>
 nnoremap <C-x>2 :split<CR>
 nnoremap <C-x>3 :vsplit<CR>
 nnoremap <C-x>0 :close<CR>
-"TwitVim
-"let twitvim_login = "Hannibal7878:masa007"
-"let twitvim_count = 100
 "Easy souce
 nnoremap <silent> <Leader>s : source %<CR>
 "outputz.vim
