@@ -12,6 +12,7 @@ if !exists('s:loaded_my_vimrc')
 	" to use many extensions of Vim.
 	set nocompatible
 endif
+
 ""Basic settings"{{{
 "構文ハイライト
 syntax enable
@@ -58,6 +59,8 @@ let mapleader = ','
 let maplocalleader = '.'
 "折りたたみに関する設定
 set fdm=marker
+"Tabをスペース変換する
+set expandtab
 "}}}
 
 ""新規ファイルを作成したときの設定"{{{
@@ -135,13 +138,13 @@ command! -bar -bang -nargs=? -complete=file Scouter
 ""GUIで動作しているときのための設定"{{{
 if has('gui_running')
 	set guioptions+=m
-	set lines=40 
-	set columns=120
 	set mousemodel=popup
 	set mouse=a
 	set nomousefocus
 	set mousehide
 	set imdisable
+	set lines=40 
+	set columns=120
 endif
 "}}}
 
@@ -192,6 +195,9 @@ endfunction
 let g:use_xhtml = 1
 let g:html_use_css = 1
 let g:html_no_pre = 1
+"let g:html_ignore_folding = 1
+let g:html_dynamic_folds=1
+let g:html_use_encoding = "UTF-8"
 "}}}
 
 ""Insert Modeでのキーバインドの設定"{{{
@@ -232,7 +238,6 @@ let g:eskk#large_dictionary = {
 \}
 autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
 autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
-nnoremap <C-j> <Plug>(eskk:toggle)
 "}}}
 
 ""Settings for Neocomplcache"{{{
@@ -245,6 +250,15 @@ let g:neocomplcache_enable_at_startup = 1
 let g:vimfiler_as_default_explorer = 1
 "}}}
 
+""Settings for Unite"{{{
+"keybind for Unite file_mru
+nnoremap <silent> <Leader>u :Unite file_mru<CR>
+"keybind for Unite buffer
+nnoremap <silent> <Leader>b :Unite buffer<CR>
+"keybind fro Unite command
+nnoremap <silent> <Leader>c :Unite command<CR>
+"}}}
+
 ""Settings for Slimv"{{{
 "Turn off paredit mode
 let g:paredit_mode = 0
@@ -254,6 +268,13 @@ let g:paredit_mode = 0
 "outputz.vim key (Import from local file)
 if filereadable(expand('~/.outputz.vim.local'))
 	source ~/.outputz.vim.local
+endif
+"}}}
+
+""Gmail vim"{{{
+"define user account
+if filereadable(expand('~/.gmail-vim.local'))
+	source ~/.gmail-vim.local
 endif
 "}}}
 
