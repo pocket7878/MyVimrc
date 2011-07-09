@@ -225,9 +225,36 @@ command! ReloadVimrc  source $MYVIMRC
 nnoremap <silent> <Leader>s : source %<CR>
 "}}}
 
-""Settings for Pathogen"{{{
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+""Settings for Vundle"{{{
+filetype off
+
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+"Original repos on github
+Bundle 'Shougo/vimshell'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimfiler'
+Bundle 'Shougo/vimproc'
+Bundle 'tyru/eskk.vim'
+Bundle 'ujihisa/unite-colorscheme'
+Bundle 'pocket7878/vinarise'
+Bundle 'ujihisa/vital.vim'
+Bundle 'kana/vim-scratch'
+Bundle 'vim-scripts/slimv.vim'
+Bundle 'tyru/open-browser.vim'
+Bundle 'tyru/savemap.vim'
+Bundle 'tyru/vice.vim'
+Bundle 'mattn/zencoding-vim'
+
+" vim-scripts repos
+Bundle 'outputz'
+Bundle 'TwitVim'
+" non github repos
+" ....
+
+filetype plugin indent on
 "}}}
 
 ""Settings for eskk.vim"{{{
@@ -268,13 +295,6 @@ let g:paredit_mode = 0
 "outputz.vim key (Import from local file)
 if filereadable(expand('~/.outputz.vim.local'))
 	source ~/.outputz.vim.local
-endif
-"}}}
-
-""Gmail vim"{{{
-"define user account
-if filereadable(expand('~/.gmail-vim.local'))
-	source ~/.gmail-vim.local
 endif
 "}}}
 
