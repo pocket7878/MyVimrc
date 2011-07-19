@@ -253,6 +253,7 @@ Bundle 'vim-scripts/slimv.vim'
 Bundle 'pocket7878/vinarise'
 Bundle 'pocket7878/curses-vim'
 Bundle 'pocket7878/outputz'
+Bundle 'pocket7878/presen-vim'
 Bundle 'hsitz/VimOrganizer'
 Bundle 'tpope/vim-surround'
 Bundle 'tsukkee/lingr-vim'
@@ -350,6 +351,5 @@ if filereadable(expand('~/.gmail-vim.local'))
 endif
 "}}}
 
-set runtimepath+=~/.vim/bundle/presen-vim
 ""Load finish
 let s:loaded_my_vimrc = 1
