@@ -142,9 +142,11 @@ if has('gui_running')
 	set mouse=a
 	set nomousefocus
 	set mousehide
-	set imdisable
-	set lines=40 
-	set columns=120
+	"set imdisable
+        colorscheme pocket
+        set guifont=Monospace\ 10
+        set lines=27
+        set columns=100
 endif
 "}}}
 
@@ -179,16 +181,16 @@ nnoremap <C-x>0 :close<CR>
 "}}}
 
 ""ウィンドウを切りかえたときに自動的にサイズ調整する"{{{
-nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
-nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
-nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
-nnoremap <C-w>L <C-w>L:call <SID>good_width()<CR>
-
-function! s:good_width()
-  if winwidth(0) < 120
-    vertical resize 120
-  endif
-endfunction
+"nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
+"nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
+"nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
+"nnoremap <C-w>L <C-w>L:call <SID>good_width()<CR>
+"
+"function! s:good_width()
+"  if winwidth(0) < 120
+"    vertical resize 120
+"  endif
+"endfunction
 "}}}
 
 ""TOHtmlでどのようにHTML化するかの設定"{{{
@@ -228,28 +230,37 @@ nnoremap <silent> <Leader>s : source %<CR>
 ""Settings for Vundle"{{{
 filetype off
 
-set rtp+=~/.vim/vundle.git/
+set rtp+=~/.vim/vundle/
 call vundle#rc()
 
 "Original repos on github
+Bundle 'kana/vim-scratch'
 Bundle 'Shougo/vimshell'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimfiler'
 Bundle 'Shougo/vimproc'
-Bundle 'tyru/eskk.vim'
-Bundle 'ujihisa/unite-colorscheme'
-Bundle 'pocket7878/vinarise'
-Bundle 'ujihisa/vital.vim'
-Bundle 'kana/vim-scratch'
-Bundle 'vim-scripts/slimv.vim'
+"Bundle 'tyru/eskk.vim'
 Bundle 'tyru/open-browser.vim'
 Bundle 'tyru/savemap.vim'
 Bundle 'tyru/vice.vim'
+Bundle 'ujihisa/unite-colorscheme'
+Bundle 'ujihisa/vital.vim'
+Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-fontzoom'
 Bundle 'mattn/zencoding-vim'
+Bundle 'vim-scripts/slimv.vim'
+Bundle 'pocket7878/vinarise'
+Bundle 'pocket7878/curses-vim'
+Bundle 'pocket7878/outputz'
+Bundle 'hsitz/VimOrganizer'
+Bundle 'tpope/vim-surround'
+Bundle 'tsukkee/lingr-vim'
 
 " vim-scripts repos
-Bundle 'outputz'
+"Bundle 'outputz'
+Bundle 'Align'
+Bundle 'TwitVim'
 " non github repos
 " ....
 
@@ -257,13 +268,13 @@ filetype plugin indent on
 "}}}
 
 ""Settings for eskk.vim"{{{
-let g:eskk#large_dictionary = {
-	\	'path': "/usr/share/skk/SKK-JISYO",
-	\	'sorted': 1,
-	\	'encoding': 'euc-jp',
-\}
-autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
-autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+"let g:eskk#large_dictionary = {
+"	\	'path': "/usr/share/skk/SKK-JISYO",
+"	\	'sorted': 1,
+"	\	'encoding': 'euc-jp',
+"\}
+"autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+"autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
 "}}}
 
 ""Settings for Neocomplcache"{{{
@@ -297,6 +308,41 @@ if filereadable(expand('~/.outputz.vim.local'))
 endif
 "}}}
 
+""Setting for VimOrganizer"{{{
+let g:org_todo_setup='TODO | DONE'
+" while g:org_tag_setup is itself a string
+let g:org_tag_setup='{@home(h) @work(w) @tennisclub(t)} \n {easy(e) hard(d)} \n {computer(c) phone(p)}'
+
+" leave these as is:
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
+au BufRead,BufNewFile *.org            call org#SetOrgFileType()
+au BufRead *.org :PreLoadTags
+au BufWrite *.org :PreWriteTags
+au BufWritePost *.org :PostWriteTags
+
+function! Org_property_changed_functions(line,key, val)
+        call confirm("prop changed: ".a:line."--key:".a:key." val:".a:val)
+endfunction
+function! Org_after_todo_state_change_hook(line,state1, state2)
+        call ConfirmDrawer("LOGBOOK")
+        let str = ": - State: " . Pad(a:state2,10) . "   from: " . Pad(a:state1,10) .
+                    \ '    [' . Timestamp() . ']'
+        call append(line("."), repeat(' ',len(matchstr(getline(line(".")),'^\s*'))) . str)
+        
+endfunction
+"}}}
+
+"Setting for QFixHowm"{{{
+set runtimepath+=~/.vim/bundle/qfixapp
+"keymap reader
+let QFixHowm_Key = 'g'
+"setting up howm_dir
+let howm_dir = '~/howm'
+let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
+let howm_fileencoding = 'utf-8'
+let howm_filefomat = 'unix'
+"}}}
+
 ""Gmail vim"{{{
 "define user account
 if filereadable(expand('~/.gmail-vim.local'))
@@ -304,5 +350,6 @@ if filereadable(expand('~/.gmail-vim.local'))
 endif
 "}}}
 
+set runtimepath+=~/.vim/bundle/presen-vim
 ""Load finish
 let s:loaded_my_vimrc = 1
