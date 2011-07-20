@@ -143,10 +143,20 @@ if has('gui_running')
 	set nomousefocus
 	set mousehide
 	"set imdisable
+<<<<<<< HEAD
         colorscheme pocket
         set guifont=Monospace\ 10
         set lines=27
         set columns=100
+=======
+        if $ENVWORKING ==# 'MyHomeDLinux'
+                set lines=40 
+                set columns=100
+        else
+                set lines=40 
+                set columns=120
+        endif
+>>>>>>> 7cbb623fa9ccdca2159de73eea926e2907dfc120
 endif
 "}}}
 
@@ -181,6 +191,7 @@ nnoremap <C-x>0 :close<CR>
 "}}}
 
 ""ウィンドウを切りかえたときに自動的にサイズ調整する"{{{
+<<<<<<< HEAD
 "nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
 "nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
 "nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
@@ -191,6 +202,18 @@ nnoremap <C-x>0 :close<CR>
 "    vertical resize 120
 "  endif
 "endfunction
+=======
+nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
+nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
+nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
+nnoremap <C-w>L <C-w>L:call <SID>good_width()<CR>
+
+function! s:good_width()
+  if winwidth(0) < 120
+    vertical resize 120
+  endif
+endfunction
+>>>>>>> 7cbb623fa9ccdca2159de73eea926e2907dfc120
 "}}}
 
 ""TOHtmlでどのようにHTML化するかの設定"{{{
@@ -260,6 +283,12 @@ Bundle 'tsukkee/lingr-vim'
 
 " vim-scripts repos
 "Bundle 'outputz'
+=======
+Bundle 'hsitz/VimOrganizer'
+
+" vim-scripts repos
+Bundle 'outputz'
+>>>>>>> 7cbb623fa9ccdca2159de73eea926e2907dfc120
 Bundle 'Align'
 Bundle 'TwitVim'
 " non github repos
