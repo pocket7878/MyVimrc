@@ -143,7 +143,7 @@ if has('gui_running')
 	set nomousefocus
 	set mousehide
 	"set imdisable
-        colorscheme pocket
+        colorscheme desert
         set guifont=Monospace\ 10
         set lines=27
         set columns=100
