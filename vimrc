@@ -281,14 +281,7 @@ Bundle 'hsitz/VimOrganizer'
 Bundle 'tpope/vim-surround'
 Bundle 'tsukkee/lingr-vim'
 
-" vim-scripts repos
-"Bundle 'outputz'
-=======
 Bundle 'hsitz/VimOrganizer'
-
-" vim-scripts repos
-Bundle 'outputz'
->>>>>>> 7cbb623fa9ccdca2159de73eea926e2907dfc120
 Bundle 'Align'
 Bundle 'TwitVim'
 " non github repos
