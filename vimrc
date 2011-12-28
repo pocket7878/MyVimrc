@@ -144,7 +144,7 @@ if has('gui_running')
 	set mousehide
 	"set imdisable
         colorscheme desert
-        set guifont=Monospace\ 10
+        set guifont=Monospace\ 12
         set lines=27
         set columns=100
 endif
@@ -257,11 +257,13 @@ Bundle 'pocket7878/presen-vim'
 Bundle 'hsitz/VimOrganizer'
 Bundle 'tpope/vim-surround'
 Bundle 'tsukkee/lingr-vim'
+Bundle 'tpope/vim-rails'
 
 " vim-scripts repos
 "Bundle 'outputz'
 Bundle 'Align'
 Bundle 'TwitVim'
+Bundle 'VimClojure'
 " non github repos
 " ....
 
@@ -286,6 +288,8 @@ let g:neocomplcache_enable_at_startup = 1
 ""Settings for VimFiler"{{{
 "Use VimFiler as default file explorer
 let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_safe_mode_by_default = 0
+nnoremap <silent> <Leader>f :VimFiler<CR>
 "}}}
 
 ""Settings for Unite"{{{
@@ -351,5 +355,7 @@ if filereadable(expand('~/.gmail-vim.local'))
 endif
 "}}}
 
+set rtp+=/home/hogehoge/.vim/bundle/unite-hyperspec/
+let g:unite_hyperspec_base_dir = "~/Desktop/HyperSpec/"
 ""Load finish
 let s:loaded_my_vimrc = 1
