@@ -244,7 +244,6 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
-"Bundle 'tyru/eskk.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
@@ -257,7 +256,6 @@ NeoBundle 'mattn/gist-vim'
 NeoBundle 'vim-scripts/slimv.vim'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'pocket7878/curses-vim'
-"NeoBundle 'pocket7878/outputz'
 NeoBundle 'pocket7878/presen-vim'
 NeoBundle 'hsitz/VimOrganizer'
 NeoBundle 'tpope/vim-surround'
@@ -267,7 +265,6 @@ NeoBundle 'motemen/hatena-vim'
 NeoBundle 'liquidz/lein-vim'
 NeoBundle 'JuliaLang/julia-vim'
 NeoBundle 'scrooloose/nerdtree'
-"NeoBundle 'thinca/vim-ft-clojure'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -276,34 +273,24 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'majutsushi/tagbar'
-
-" vim-scripts repos
-NeoBundle 'Align'
-NeoBundle 'TwitVim'
-" non github repos
-NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
-" Haskell
+NeoBundle 'mattn/vdbi-vim'
 NeoBundle "dag/vim2hs"
 NeoBundle "eagletmt/ghcmod-vim"
 NeoBundle "eagletmt/unite-haddock"
 NeoBundle "ujihisa/neco-ghc"
 NeoBundle "ujihisa/unite-haskellimport"
+
+" vim-scripts repos
+NeoBundle 'Align'
+NeoBundle 'TwitVim'
+" non github repos
+
 " color scheme
 NeoBundle "altercation/vim-colors-solarized"
 
 filetype plugin indent on
 
 NeoBundleCheck
-"}}}
-
-""Settings for eskk.vim{{{
-"let g:eskk#large_dictionary = {
-"	\	'path': "/usr/share/skk/SKK-JISYO",
-"	\	'sorted': 1,
-"	\	'encoding': 'euc-jp',
-"\}
-"autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
-"autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
 "}}}
 
 ""Settings for Neocomplcache{{{
@@ -329,13 +316,6 @@ nnoremap <silent> <Leader>c :Unite command<CR>
 ""Settings for Slimv{{{
 "Turn off paredit mode
 let g:paredit_mode = 0
-"}}}
-
-""Settings for outputz.vim{{{
-"outputz.vim key (Import from local file)
-"if filereadable(expand('~/.outputz.vim.local'))
-"  source ~/.outputz.vim.local
-"endif
 "}}}
 
 ""Settings for VimOrganizer{{{
@@ -408,22 +388,6 @@ set rtp+=~/.vim/bundle/gmail-vim
 
 ""Settings for open-browser.vim{{{
 nmap <Leader>w <Plug>(openbrowser-open)
-"}}}
-
-""Settings for Vim-LaTeX{{{
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-let g:Imap_UsePlaceHolders = 1
-let g:Imap_DeleteEmptyPlaceHolders = 1
-let g:Imap_StickyPlaceHolders = 0
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_FormatDependency_ps = 'dvi,ps'
-let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-let g:Tex_CompileRule_dvi = 'platex -kanji=utf8 -guess-input-enc -synctex=1 -interaction=nonstopmode $*'
-let g:Tex_BibtexFlavor = 'pbibtex -kanji=utf8'
-let g:Tex_ViewRule_dvi = 'open -a PictPrinter'
-let g:Tex_ViewRule_ps = 'open -a PictPrinter'
-let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
 "}}}
 
 ""Settings for vim2hs{{{
