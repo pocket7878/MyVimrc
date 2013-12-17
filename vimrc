@@ -1,6 +1,6 @@
 """ my ~/.vimrc
 """ Pocket7878 <poketo7878@gmail.com>
-""" Last Update: 2011-07-05
+""" Last Update: 2013-12-15
 """
 """ Coding rules
 """  * 折り畳みの末尾行はあとから追加しやすいようにかならず空白行に置く
@@ -9,11 +9,11 @@
 
 ""Start Loading
 if !exists('s:loaded_my_vimrc')
-	" to use many extensions of Vim.
-	set nocompatible
+  " to use many extensions of Vim.
+  set nocompatible
 endif
 
-""Basic settings"{{{
+""Basic settings{{{
 "構文ハイライト
 syntax enable
 "行番号の表示
@@ -25,7 +25,7 @@ set autoindent
 "高度なインデントの設定
 set smartindent
 "C言語の高度なインデントをする
-set cindent 
+set cindent
 "行頭の余白内でTabを打ち込むと,'shiftwidth'との数だけインデントする
 set smarttab
 "ファイル保存時にバックアップファイルを作成しない
@@ -45,9 +45,9 @@ filetype indent on
 "フォーマットオプションを設定する
 set formatoptions=tcqlM1
 "ステータスラインを表示
-set laststatus=2 
+set laststatus=2
 "ステータスラインの内容を定義
-set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
 "削除方法の設定
 set backspace=indent,eol,start
 "端末でもマウスを使う
@@ -61,34 +61,39 @@ let maplocalleader = '.'
 set fdm=marker
 "Tabをスペース変換する
 set expandtab
+
+set shiftwidth=2
+
 "}}}
 
-""新規ファイルを作成したときの設定"{{{
+""新規ファイルを作成したときの設定{{{
 "Lisp & Scheme
 let lisp_rainbow = 1
-autocmd FileType lisp set nocindent | set lisp | let lisp_rainbow = 1 
+autocmd FileType lisp set nocindent | set lisp | let lisp_rainbow = 1
 autocmd FileType scheme set nocindent | set lisp | let lisp_rainbow = 1
 "HTML
 "HTMLテンプレートを挿入
-autocmd BufNewFile *.html 0r ~/Documents/vim-template/html.template
+autocmd BufNewFile *.html 0r ~/Documents/vim-template/html.template | set shiftwidth=2
 "}}}
 
 ""ファイルを開いたときの設定"{{{
 "Lispファイルを開いたときの動作
 aug Lisp
-	au!
-	autocmd FileType lisp set nocindent nosmartindent lisp
+  au!
+  autocmd FileType lisp set nocindent nosmartindent lisp
 aug END
 
 "Gauche対応のSchemeインデントを行う"
 aug Scheme
-	au!
-	 autocmd FileType scheme set nosmartindent nocindent lispwords=define lisp
+  au!
+   autocmd FileType scheme set nosmartindent nocindent lispwords=define lisp
 aug END
 let is_gauche=1
+
+autocmd BufNewFile,BufRead *.swi set filetype=prolog
 "}}}
 
-""文字コードなどに関する設定"{{{
+""文字コードなどに関する設定{{{
 set encoding=utf-8
 "改行コードを自動認識
 set fileformats=unix,dos,mac
@@ -101,7 +106,7 @@ endif
 set fileformats=unix,dos,mac
 "}}}
 
-""コメントインアウトするキーバインド"{{{
+""コメントインアウトするキーバインド{{{
 " lhs comments
 vmap <Leader># :s/^/#/<CR>:nohlsearch<CR>
 vmap <Leader>/ :s/^/\/\//<CR>:nohlsearch<CR>
@@ -122,35 +127,20 @@ vmap <Leader>b v`k0i/*`>j0i*/<CR>
 vmap <Leader>h v`k0i<CR>
 "}}}
 
-""Vimの戦闘力を計算する"{{{
+""Vimの戦闘力を計算する{{{
 function! Scouter(file, ...)
-	let pat = '^\s*$\|^\s*"'
-	let lines = readfile(a:file)
-	if !a:0 || !a:1
-		let lines = split(substitute(join(lines, "\n"), '\n\s*\\', '', '\g'), "\n")
-	endif
-	return len(filter(lines,'v:val !~ pat'))
+  let pat = '^\s*$\|^\s*"'
+  let lines = readfile(a:file)
+  if !a:0 || !a:1
+  let lines = split(substitute(join(lines, "\n"), '\n\s*\\', '', '\g'), "\n")
+  endif
+  return len(filter(lines,'v:val !~ pat'))
 endfunction
 command! -bar -bang -nargs=? -complete=file Scouter
 \ 	echo Scouter(empty(<q-args>) ? $MYVIMRC : expand(<q-args>), <bang>0)
 "}}}
 
-""GUIで動作しているときのための設定"{{{
-if has('gui_running')
-	set guioptions+=m
-	set mousemodel=popup
-	set mouse=a
-	set nomousefocus
-	set mousehide
-	"set imdisable
-        colorscheme desert
-        set guifont=Monospace\ 12
-        set lines=27
-        set columns=100
-endif
-"}}}
-
-""Quick fix Keymapping"{{{
+""Quick fix Keymapping{{{
 nnoremap Q q
 
 nnoremap qj  :cnext<CR>
@@ -173,14 +163,14 @@ nnoremap qg  :grep<Space>
 nnoremap q   <Nop>
 "}}}
 
-""Emacs like spliting key-bind"{{{
+""Emacs like spliting key-bind{{{
 nnoremap <C-x>1 :only<CR>
 nnoremap <C-x>2 :split<CR>
 nnoremap <C-x>3 :vsplit<CR>
 nnoremap <C-x>0 :close<CR>
 "}}}
 
-""ウィンドウを切りかえたときに自動的にサイズ調整する"{{{
+""ウィンドウを切りかえたときに自動的にサイズ調整する{{{
 "nnoremap <C-w>h <C-w>h:call <SID>good_width()<CR>
 "nnoremap <C-w>l <C-w>l:call <SID>good_width()<CR>
 "nnoremap <C-w>H <C-w>H:call <SID>good_width()<CR>
@@ -193,7 +183,7 @@ nnoremap <C-x>0 :close<CR>
 "endfunction
 "}}}
 
-""TOHtmlでどのようにHTML化するかの設定"{{{
+""TOHtmlでどのようにHTML化するかの設定{{{
 let g:use_xhtml = 1
 let g:html_use_css = 1
 let g:html_no_pre = 1
@@ -202,13 +192,13 @@ let g:html_dynamic_folds=1
 let g:html_use_encoding = "UTF-8"
 "}}}
 
-""Insert Modeでのキーバインドの設定"{{{
+""Insert Modeでのキーバインドの設定{{{
 "Ctrl-eで行末Ctrl-aで行頭
-imap <C-e> <END> 
+imap <C-e> <END>
 imap <C-a> <HOME>
 "}}}
 
-""クリップボードの同期の設定"{{{
+""クリップボードの同期の設定{{{
 set clipboard+=autoselect
 set clipboard+=unnamed
 "if has('unnamedplus')
@@ -216,83 +206,118 @@ set clipboard+=unnamed
 "endif
 "}}}
 
-""便利なコマンドやキーバインド"{{{
+""便利なコマンドやキーバインド{{{
 "ファイル名を変更して開き直す
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 "別名のファイルを保存してそちらを開く
 command! -nargs=1 -complet=file Copy f <args>|call copy(expand('#'))
 "Vimrcを簡単にリロード
-command! ReloadVimrc  source $MYVIMRC 
+command! ReloadVimrc  source $MYVIMRC
 "Easy souce
 nnoremap <silent> <Leader>s : source %<CR>
 "}}}
 
-""Settings for Vundle"{{{
-filetype off
+""Settings for NeoBundle{{{
+if has('vim_starting')
+        set nocompatible
+        set runtimepath +=~/.vim/bundle/neobundle.vim
+endif
 
-set rtp+=~/.vim/vundle/
-call vundle#rc()
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+"Let NeoBundle manager NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 "Original repos on github
-Bundle 'kana/vim-scratch'
-Bundle 'Shougo/vimshell'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimfiler'
-Bundle 'Shougo/vimproc'
+NeoBundle 'kana/vim-scratch'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'mopp/AOJ.vim'
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 "Bundle 'tyru/eskk.vim'
-Bundle 'tyru/open-browser.vim'
-Bundle 'tyru/savemap.vim'
-Bundle 'tyru/vice.vim'
-Bundle 'ujihisa/unite-colorscheme'
-Bundle 'ujihisa/vital.vim'
-Bundle 'thinca/vim-quickrun'
-Bundle 'thinca/vim-fontzoom'
-Bundle 'mattn/zencoding-vim'
-Bundle 'vim-scripts/slimv.vim'
-Bundle 'pocket7878/vinarise'
-Bundle 'pocket7878/curses-vim'
-Bundle 'pocket7878/outputz'
-Bundle 'pocket7878/presen-vim'
-Bundle 'hsitz/VimOrganizer'
-Bundle 'tpope/vim-surround'
-Bundle 'tsukkee/lingr-vim'
-Bundle 'tpope/vim-rails'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'tyru/savemap.vim'
+NeoBundle 'tyru/vice.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'vim-jp/vital.vim'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-fontzoom'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'vim-scripts/slimv.vim'
+NeoBundle 'Shougo/vinarise'
+NeoBundle 'pocket7878/curses-vim'
+"NeoBundle 'pocket7878/outputz'
+NeoBundle 'pocket7878/presen-vim'
+NeoBundle 'hsitz/VimOrganizer'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tsukkee/lingr-vim'
+NeoBundle 'motemen/hatena-vim'
+NeoBundle 'liquidz/lein-vim'
+NeoBundle 'JuliaLang/julia-vim'
+NeoBundle 'scrooloose/nerdtree'
+"NeoBundle 'thinca/vim-ft-clojure'
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'scrooloose/syntastic.git'
+NeoBundle 'majutsushi/tagbar'
 
 " vim-scripts repos
-"Bundle 'outputz'
-Bundle 'Align'
-Bundle 'TwitVim'
-Bundle 'VimClojure'
+NeoBundle 'Align'
+NeoBundle 'TwitVim'
 " non github repos
-" ....
+NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+" Haskell
+NeoBundle "dag/vim2hs"
+NeoBundle "eagletmt/ghcmod-vim"
+NeoBundle "eagletmt/unite-haddock"
+NeoBundle "ujihisa/neco-ghc"
+NeoBundle "ujihisa/unite-haskellimport"
+" color scheme
+NeoBundle "altercation/vim-colors-solarized"
 
 filetype plugin indent on
+
+NeoBundleCheck
 "}}}
 
-""Settings for eskk.vim"{{{
+""Settings for eskk.vim{{{
 "let g:eskk#large_dictionary = {
 "	\	'path': "/usr/share/skk/SKK-JISYO",
 "	\	'sorted': 1,
 "	\	'encoding': 'euc-jp',
 "\}
-"autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
-"autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P  
+"autocmd InsertEnter * set statusline=%<[%n]%{eskk#statusline()}%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
+"autocmd InsertLeave * set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
 "}}}
 
-""Settings for Neocomplcache"{{{
+""Settings for Neocomplcache{{{
 "Use neocomplcache
 let g:neocomplcache_enable_at_startup = 1
 "}}}
 
-""Settings for VimFiler"{{{
+""Settings for VimFiler{{{
 "Use VimFiler as default file explorer
 let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
 nnoremap <silent> <Leader>f :VimFiler<CR>
 "}}}
 
-""Settings for Unite"{{{
+""Settings for Unite{{{
 "keybind for Unite file_mru
 nnoremap <silent> <Leader>u :Unite file_mru<CR>
 "keybind for Unite buffer
@@ -301,25 +326,25 @@ nnoremap <silent> <Leader>b :Unite buffer<CR>
 nnoremap <silent> <Leader>c :Unite command<CR>
 "}}}
 
-""Settings for Slimv"{{{
+""Settings for Slimv{{{
 "Turn off paredit mode
 let g:paredit_mode = 0
 "}}}
 
-""Setting for outputz.vim"{{{
+""Settings for outputz.vim{{{
 "outputz.vim key (Import from local file)
-if filereadable(expand('~/.outputz.vim.local'))
-	source ~/.outputz.vim.local
-endif
+"if filereadable(expand('~/.outputz.vim.local'))
+"  source ~/.outputz.vim.local
+"endif
 "}}}
 
-""Setting for VimOrganizer"{{{
+""Settings for VimOrganizer{{{
 let g:org_todo_setup='TODO | DONE'
 " while g:org_tag_setup is itself a string
 let g:org_tag_setup='{@home(h) @work(w) @tennisclub(t)} \n {easy(e) hard(d)} \n {computer(c) phone(p)}'
 
 " leave these as is:
-au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
 au BufRead,BufNewFile *.org            call org#SetOrgFileType()
 au BufRead *.org :PreLoadTags
 au BufWrite *.org :PreWriteTags
@@ -333,11 +358,10 @@ function! Org_after_todo_state_change_hook(line,state1, state2)
         let str = ": - State: " . Pad(a:state2,10) . "   from: " . Pad(a:state1,10) .
                     \ '    [' . Timestamp() . ']'
         call append(line("."), repeat(' ',len(matchstr(getline(line(".")),'^\s*'))) . str)
-        
 endfunction
 "}}}
 
-"Setting for QFixHowm"{{{
+""Settings for QFixHowm{{{
 set runtimepath+=~/.vim/bundle/qfixapp
 "keymap reader
 let QFixHowm_Key = 'g'
@@ -348,14 +372,126 @@ let howm_fileencoding = 'utf-8'
 let howm_filefomat = 'unix'
 "}}}
 
-""Gmail vim"{{{
+""Settings for Gmail-vim{{{
 "define user account
 if filereadable(expand('~/.gmail-vim.local'))
-	source ~/.gmail-vim.local
+  source ~/.gmail-vim.local
 endif
 "}}}
 
-set rtp+=/home/hogehoge/.vim/bundle/unite-hyperspec/
-let g:unite_hyperspec_base_dir = "~/Desktop/HyperSpec/"
+""Settings for Hatena-vim{{{
+let g:hatena_user = 'Pocket7878_dev'
+let g:hatena_users = ['Pocket7878', 'Pocket7878_dev']
+"}}}
+
+""Settings for presen-vim{{{
+"}}}
+
+""Settings for quickrun{{{
+let g:quickrun_config = {
+\   'clojure': {
+\     'command': 'clj-env-dir',
+\     'exec': '%c %s',
+\     'tempfile': '{tempname()}.clj',
+\   }
+\ }
+"}}}
+
+""Settings for VimShell{{{
+let g:vimshell_user_prompt = 'getcwd()'
+"}}}
+
+""Settings for vimtyping{{{
+set rtp+=~/.vim/bundle/vimtyping
+set rtp+=~/.vim/bundle/gmail-vim
+"}}}
+
+""Settings for open-browser.vim{{{
+nmap <Leader>w <Plug>(openbrowser-open)
+"}}}
+
+""Settings for Vim-LaTeX{{{
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+let g:Imap_UsePlaceHolders = 1
+let g:Imap_DeleteEmptyPlaceHolders = 1
+let g:Imap_StickyPlaceHolders = 0
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_FormatDependency_ps = 'dvi,ps'
+let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+let g:Tex_CompileRule_dvi = 'platex -kanji=utf8 -guess-input-enc -synctex=1 -interaction=nonstopmode $*'
+let g:Tex_BibtexFlavor = 'pbibtex -kanji=utf8'
+let g:Tex_ViewRule_dvi = 'open -a PictPrinter'
+let g:Tex_ViewRule_ps = 'open -a PictPrinter'
+let g:Tex_ViewRule_pdf = '/usr/bin/open -a "Adobe Reader.app"'
+"}}}
+
+""Settings for vim2hs{{{
+let g:haskell_conceal              = 0
+let g:haskell_conceal_wide = 0
+let g:haskell_conceal_enumerations = 0
+"}}}
+
+""Settings for solarized{{{
+set background=dark
+colorscheme solarized
+"}}}
+
+""Settings for rainbow_parentheses{{{
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+"}}}
+
+""Settings for indent-guides{{{
+"let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_guide_size = 1
+"let g:indent_guides_color_change_percent = 30
+"}}}
+
+""Settings for air-line{{{
+let g:airline_theme='solarized'
+"let g:airline#extensions#tabline#enabled = 1
+"}}}
+
+""Settings for AOJ {{{
+let g:aoj#user_id = 'Pocket7878'
+"}}}
+
+""Settings for vim-over{{{
+" over.vimの起動
+nnoremap <silent> <Leader>m :OverCommandLine<CR>
+" カーソル下の単語をハイライト付きで置換
+nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+" コピーした文字列をハイライト付きで置換
+nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
+"}}}
+
+""Load Local setting file{{{
+if filereadable(expand($HOME.'/.localsetting/vimrc_local'))
+  source $HOME/.localsetting/vimrc_local
+  command! ReloadVimrcLocal  source $HOME/.localsetting/vimrc_local
+endif
+"}}}
+
 ""Load finish
 let s:loaded_my_vimrc = 1
