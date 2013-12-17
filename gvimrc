@@ -7,7 +7,8 @@ if has('gui_running')
 	set mousehide
 	"set imdisable
         set background=dark
-        colorscheme solarized
+        colorscheme molokai
+        let g:molokai_original = 1
         set guifont=Ricty\ Regular:h16
         set transparency=10
         set lines=24

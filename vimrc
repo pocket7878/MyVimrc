@@ -287,6 +287,7 @@ NeoBundle 'TwitVim'
 
 " color scheme
 NeoBundle "altercation/vim-colors-solarized"
+NeoBundle "tomasr/molokai"
 
 filetype plugin indent on
 
@@ -396,9 +397,10 @@ let g:haskell_conceal_wide = 0
 let g:haskell_conceal_enumerations = 0
 "}}}
 
-""Settings for solarized{{{
+""Settings for colorscheme{{{
 set background=dark
-colorscheme solarized
+colorscheme molokai
+let g:molokai_original = 1
 "}}}
 
 ""Settings for rainbow_parentheses{{{
@@ -433,7 +435,7 @@ let g:rbpt_colorpairs = [
 "}}}
 
 ""Settings for air-line{{{
-let g:airline_theme='solarized'
+let g:airline_theme='molokai'
 "let g:airline#extensions#tabline#enabled = 1
 "}}}
 
