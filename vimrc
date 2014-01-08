@@ -253,7 +253,6 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-fontzoom'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mattn/gist-vim'
-NeoBundle 'vim-scripts/slimv.vim'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'pocket7878/curses-vim'
 NeoBundle 'pocket7878/presen-vim'
@@ -279,6 +278,10 @@ NeoBundle "eagletmt/ghcmod-vim"
 NeoBundle "eagletmt/unite-haddock"
 NeoBundle "ujihisa/neco-ghc"
 NeoBundle "ujihisa/unite-haskellimport"
+NeoBundle "basyura/rmine.vim"
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'klen/python-mode'
+NeoBundle 'itchyny/calendar.vim'
 
 " vim-scripts repos
 NeoBundle 'Align'
@@ -312,11 +315,6 @@ nnoremap <silent> <Leader>u :Unite file_mru<CR>
 nnoremap <silent> <Leader>b :Unite buffer<CR>
 "keybind fro Unite command
 nnoremap <silent> <Leader>c :Unite command<CR>
-"}}}
-
-""Settings for Slimv{{{
-"Turn off paredit mode
-let g:paredit_mode = 0
 "}}}
 
 ""Settings for VimOrganizer{{{
@@ -452,6 +450,21 @@ nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
 nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 "}}}
 
+""Settings for rmine.vim{{{
+let g:rmine_server_url = 'http://www34127ue.sakura.ne.jp/redmine/'
+let g:rmine_access_key = '1e07242b193c22f286354a3b987975b87aaa97ef'
+"}}}
+
+""Settings for pymode{{{
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 0
+let g:pymode_lint_on_fly = 0
+autocmd FileType python set completeopt-=preview
+""}}}
+
+""Settings for nerdtree{{{
+let g:NERDTreeChDirMode = 1
+""}}
 ""Load Local setting file{{{
 if filereadable(expand($HOME.'/.localsetting/vimrc_local'))
   source $HOME/.localsetting/vimrc_local
