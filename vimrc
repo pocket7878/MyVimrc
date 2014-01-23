@@ -282,6 +282,7 @@ NeoBundle "basyura/rmine.vim"
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'klen/python-mode'
 NeoBundle 'itchyny/calendar.vim'
+NeoBundle 'cocopon/iceberg.vim'
 
 " vim-scripts repos
 NeoBundle 'Align'
