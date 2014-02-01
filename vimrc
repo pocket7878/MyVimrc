@@ -451,11 +451,6 @@ nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
 nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 "}}}
 
-""Settings for rmine.vim{{{
-let g:rmine_server_url = 'http://www34127ue.sakura.ne.jp/redmine/'
-let g:rmine_access_key = '1e07242b193c22f286354a3b987975b87aaa97ef'
-"}}}
-
 ""Settings for pymode{{{
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
